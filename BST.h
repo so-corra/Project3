@@ -29,7 +29,7 @@ private:
     int size(BSTNode* node) const;
 public:
     BST() : root(nullptr) {}
-    ~BST(){};
+    ~BST();
 
     // public methods
     void insert(int value);

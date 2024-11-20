@@ -149,6 +149,12 @@ int BST::size(BSTNode *node) const {
 /* =====================================================================
             PUBLIC METHODS
 ===================================================================== */
+
+BST::~BST() {
+    // removes all children before root and then root
+    remove(root, root->data);
+}
+
 // adds an item to its proper location in a binary search tree. Note that duplicates should not be stored and an error message should be displayed if duplicate value is found in BST. Any invalid data should throw an exception and be handled properly
 void BST::insert(int value) {
     insert(root, value);
