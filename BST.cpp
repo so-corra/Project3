@@ -63,7 +63,7 @@ bool BST::search(BSTNode *node, int value) {
 // DELETE GOES HERE
 
 // returns the node with the minimum value in the BST
-BSTNode *BST::findMin(BSTNode *node) {
+BSTNode * BST::findMin(BSTNode *node) const {
     // in a sorted BST the min is the leftmost node
 
     // base case, end of the line
@@ -77,7 +77,7 @@ BSTNode *BST::findMin(BSTNode *node) {
 }
 
 // returns the node with the maximum value in the BST
-BSTNode *BST::findMax(BSTNode *node) {
+BSTNode * BST::findMax(BSTNode *node) const {
     // in a sorted BST the min is the rightmost node
 
     // base case, end of the line
@@ -100,10 +100,6 @@ void BST::pre_order(BSTNode *node) const {
 
 void BST::post_order(BSTNode *node) const {
 
-}
-
-void BST::level_order(BSTNode *node) const {
-    // LITERALLY NOT POSSIBLE
 }
 
 // returns the total number of nodes in the BST
@@ -148,7 +144,41 @@ void BST::displayPostOrder() const {
 }
 
 void BST::displayLevelOrder() const {
+    // check for empty tree, print nothing and end
+    if (root == nullptr) {
+        cout << endl;
+        return;
+    }
 
+    // make queue and put root in it
+    queue<BSTNode*> nodesQueue;
+    nodesQueue.push(root);
+
+    // loop by level
+    while (!nodesQueue.empty()) {
+        // not empty, there is a level to handle
+
+        // handle the level
+        // for loop changes size with pop() push() so get it beforehand
+        int currentLevelSize = nodesQueue.size();
+        // for each node in the current level, add its children and then remove it
+        for (int i = 0; i < currentLevelSize; i++) {
+            // add left child if it exists
+            if (nodesQueue.front()->left != nullptr) {
+                nodesQueue.push(nodesQueue.front()->left);
+            }
+            // add right child if it exists
+            if (nodesQueue.front()->right != nullptr) {
+                nodesQueue.push(nodesQueue.front()->right);
+            }
+            // print node before removal
+            cout << to_string(nodesQueue.front()->data) << " ";
+            // remove node
+            nodesQueue.pop();
+        }
+        // put next level on new line
+        cout << endl;
+    }
 }
 
 // this method should have no parameters and return an integer representing the height of the tree
@@ -198,7 +228,7 @@ int BST::getMin() const {
     }
 
     // otherwise, return data of min
-    return findMin(root)->value;
+    return findMin(root)->data;
 }
 
 // returns the node with the maximum value in the BST
@@ -209,7 +239,7 @@ int BST::getMax() const {
     }
 
     // otherwise, return data of max
-    return findMax(root)->value;
+    return findMax(root)->data;
 }
 
 // returns true if the BST is complete, false otherwise

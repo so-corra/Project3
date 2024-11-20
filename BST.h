@@ -21,12 +21,11 @@ private:
     BSTNode* insert(BSTNode* node, int value);
     bool search(BSTNode* node, int value);
     //BSTNode* delete(BSTNode* node, int value);
-    BSTNode* findMin(BSTNode* node);
-    BSTNode* findMax(BSTNode* node);
+    BSTNode * findMin(BSTNode* node) const;
+    BSTNode * findMax(BSTNode* node) const;
     void in_order(BSTNode* node) const;
     void pre_order(BSTNode* node) const;
     void post_order(BSTNode* node) const;
-    void level_order(BSTNode* node) const;
     int size(BSTNode* node) const;
 public:
     BST() : root(nullptr) {}
