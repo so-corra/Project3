@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <queue>
 #include "BST.h"
 using std::runtime_error;
 using namespace std;
@@ -102,12 +103,19 @@ void BST::post_order(BSTNode *node) const {
 }
 
 void BST::level_order(BSTNode *node) const {
-
+    // LITERALLY NOT POSSIBLE
 }
 
 // returns the total number of nodes in the BST
 int BST::size(BSTNode *node) const {
-    return 0;
+    // dead ends are zeros
+    if (node == nullptr) {
+        return 0;
+    }
+
+    // if we aren't a dead end, add one
+    // size = allLeft + allRight + me
+    return (size(node->left) + size(node->right) + 1);
 }
 
 
@@ -145,7 +153,41 @@ void BST::displayLevelOrder() const {
 
 // this method should have no parameters and return an integer representing the height of the tree
 int BST::height() const {
-    return 0;
+    // check for empty tree
+    if (root == nullptr) {
+        throw runtime_error("Cannot check height() of empty tree");
+    }
+
+    // start at -1 because there is at least a root node therefore while loop will always add 1 for a height of 0 when there is only one node
+    int heightToReturn = -1;
+    // make queue and put root in it
+    queue<BSTNode*> nodesQueue;
+    nodesQueue.push(root);
+
+    // loop by level
+    while (!nodesQueue.empty()) {
+        // not empty, there is a level to handle
+        heightToReturn++;
+
+        // handle the level
+        // for loop changes size with pop() push() so get it beforehand
+        int currentLevelSize = nodesQueue.size();
+        // for each node in the current level, add its children and then remove it
+        for (int i = 0; i < currentLevelSize; i++) {
+            // add left child if it exists
+            if (nodesQueue.front()->left != nullptr) {
+                nodesQueue.push(nodesQueue.front()->left);
+            }
+            // add right child if it exists
+            if (nodesQueue.front()->right != nullptr) {
+                nodesQueue.push(nodesQueue.front()->right);
+            }
+            // remove node
+            nodesQueue.pop();
+        }
+    }
+
+    return heightToReturn;
 }
 
 // returns the node with the minimum value in the BST
