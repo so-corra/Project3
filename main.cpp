@@ -14,17 +14,68 @@ using std::runtime_error;
 using namespace std;
 
 
+void test_constructor() {}
 
-/* Issues for Tony:
- * display() is marked as bonus but written as required to be implemented in Specifications and then marked as bonus again in the rubric
- * the tree traversals aren't required in the Specifications but are marked as being worth 20 points in the rubric
- * what does he want for the traversals??? They are void display functions. No instructions in Specifications
- * git repo is a bonus
- */
+void test_destructor() {}
+
+void test_insert() {}
+
+void test_search() {}
+
+void test_delete() {}
+
+void test_displayInOrder() {}
+
+void test_displayPrOrder() {}
+
+void test_displayPostOrder() {}
+
+void test_displayLevelOrder() {}
+
+void test_count() {}
+
+void test_height() {}
+
+void test_getMin() {}
+
+void test_getMax() {}
+
+void test_isComplete() {}
+
+void test_display() {}
+
 
 int main() {
 
+    test_constructor();
 
+    test_destructor();
+
+    test_insert();
+
+    test_search();
+
+    test_delete();
+
+    test_displayInOrder();
+
+    test_displayPrOrder();
+
+    test_displayPostOrder();
+
+    test_displayLevelOrder();
+
+    test_count();
+
+    test_height();
+
+    test_getMin();
+
+    test_getMax();
+
+    test_isComplete();
+
+    test_display();
 
 
 
