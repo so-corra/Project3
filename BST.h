@@ -20,7 +20,7 @@ private:
     // Helper functions for recursive operations
     BSTNode* insert(BSTNode* node, int value);
     bool search(BSTNode* node, int value);
-    //BSTNode* delete(BSTNode* node, int value);
+    BSTNode* remove(BSTNode* node, int value);
     BSTNode * findMin(BSTNode* node) const;
     BSTNode * findMax(BSTNode* node) const;
     void in_order(BSTNode* node) const;
@@ -34,7 +34,7 @@ public:
     // public methods
     void insert(int value);
     bool search(int value);
-    //void delete(int value);
+    void remove(int value);
 
     // tree traversals
     void displayInOrder() const;
@@ -48,7 +48,6 @@ public:
     int getMin() const;
     int getMax() const;
     bool isComplete() const;
-    void display() const; // BONUS
 
 };
 

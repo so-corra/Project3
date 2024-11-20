@@ -22,7 +22,7 @@ void test_insert() {}
 
 void test_search() {}
 
-void test_delete() {}
+void test_remove() {}
 
 void test_displayInOrder() {}
 
@@ -42,8 +42,6 @@ void test_getMax() {}
 
 void test_isComplete() {}
 
-void test_display() {}
-
 
 int main() {
 
@@ -55,7 +53,7 @@ int main() {
 
     test_search();
 
-    test_delete();
+    test_remove();
 
     test_displayInOrder();
 
@@ -74,8 +72,6 @@ int main() {
     test_getMax();
 
     test_isComplete();
-
-    test_display();
 
 
 
