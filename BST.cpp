@@ -42,7 +42,7 @@ bool BST::search(BSTNode *node, int value) {
     if (node == nullptr) {
         return false;
     }
-    // base case, value found!
+    // value found!
     else if (node->data == value) {
         return true;
     }
@@ -60,8 +60,37 @@ bool BST::search(BSTNode *node, int value) {
 }
 
 // remove the node with the target value from the BST if found. The BST should remain connected
+// does nothing when value not found
 BSTNode *BST::remove(BSTNode *node, int value) {
-    return nullptr;
+    // root is nullptr, target was found and killed, or target could not be found where it should've been
+    if (node == nullptr) {
+        return nullptr;
+    }
+    // value found! KILL
+    else if (node->data == value) {
+        // before removal, recursively remove all children
+        if (node->left != nullptr) {
+            remove(node->left, node->data);
+        }
+        if (node->right != nullptr) {
+            remove(node->right, node->data);
+        }
+        // remove a node
+        delete node;
+        // set up for base case
+        return nullptr;
+    }
+    // value should be to the left
+    else if (node->data > value) {
+        return remove(node->left, value);
+    }
+    // value should be to the right
+    else if (node->data < value) {
+        return remove(node->right, value);
+    }
+
+    // this line should never run but just in case
+    throw runtime_error("delete() broke");
 }
 
 // returns the node with the minimum value in the BST
@@ -131,8 +160,9 @@ bool BST::search(int value) {
 }
 
 // remove the node with the target value from the BST if found. The BST should remain connected
+// does nothing when value not found
 void BST::remove(int value) {
-
+    remove(root, value);
 }
 
 void BST::displayInOrder() const {
