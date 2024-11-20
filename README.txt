@@ -1,0 +1,2 @@
+Description of the project, date, authors, honor pledge, list of files, and dependency. You need to include a short description of the test plan for each test function with multiple test cases and its best-case and worst-case time (big-O) complexity. Each case should include sample inputs, expected outputs, and actual outputs. The expected output should match the actual output to show that the designed test is passed. Include a separate section with your git log to show all the major commits for the bonus points
+README should really stress completion and incompletion
