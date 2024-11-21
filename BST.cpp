@@ -284,8 +284,53 @@ int BST::getMax() const {
 
 // returns true if the BST is complete, false otherwise
 bool BST::isComplete() const {
-    // get height
-    // calculate max nodes using height
-    // compare to existing number of nodes using size
-    return false;
+    // check for empty tree
+    if (root == nullptr) {
+        return true;
+    }
+
+    // make queue and put root in it
+    queue<BSTNode*> nodesQueue;
+    nodesQueue.push(root);
+    bool lastLevelMissingRightChild = false;
+
+    // loop by level
+    while (!nodesQueue.empty()) {
+        // not empty, there is a level to handle
+
+        // handle the level
+        // for loop changes size with pop() push() so get it beforehand
+        int currentLevelSize = nodesQueue.size();
+        // for each node in the current level, add its children and then remove it
+        for (int i = 0; i < currentLevelSize; i++) {
+            bool currentLevelMissingLeftChild = false;
+            // add left child if it exists
+            if (nodesQueue.front()->left != nullptr) {
+                if (lastLevelMissingRightChild) {
+                    return false;
+                }
+                nodesQueue.push(nodesQueue.front()->left);
+            }
+            else {
+                currentLevelMissingLeftChild = true;
+            }
+
+            // add right child if it exists
+            if (nodesQueue.front()->right != nullptr) {
+                if (currentLevelMissingLeftChild) {
+                    return false;
+                }
+                nodesQueue.push(nodesQueue.front()->right);
+            }
+            else {
+                lastLevelMissingRightChild = true;
+            }
+
+            // remove node
+            nodesQueue.pop();
+        }
+    }
+
+    // if we make it through the whole thing without returning false it is true
+    return true;
 }
