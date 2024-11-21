@@ -168,8 +168,8 @@ void BST::in_order(BSTNode *node) const {
 void BST::pre_order(BSTNode *node) const {
     if (node != nullptr) {
         cout << to_string(node->data) << " ";
-        in_order(node->left);
-        in_order(node->right);
+        pre_order(node->left);
+        pre_order(node->right);
     }
 }
 
@@ -179,8 +179,8 @@ void BST::pre_order(BSTNode *node) const {
  */
 void BST::post_order(BSTNode *node) const {
     if (node != nullptr) {
-        in_order(node->left);
-        in_order(node->right);
+        post_order(node->left);
+        post_order(node->right);
         cout << to_string(node->data) << " ";
     }
 }
@@ -209,11 +209,13 @@ int BST::size(BSTNode *node) const {
 
 /**
  * destructor for Binary Search Tree which calls remove() on the root to recursively delete every node below it
- * dependencies: recursive helper remove()
+ * dependencies: public member remove()
  */
 BST::~BST() {
     // removes all children before root and then root
-    remove(root, root->data);
+    if (root != nullptr) {
+        remove(root->data);
+    }
 }
 
 /**
@@ -222,7 +224,7 @@ BST::~BST() {
  * dependencies: recursive helper insert() which can throw error
  */
 void BST::insert(int value) {
-    insert(root, value);
+    root = insert(root, value);
 }
 
 /**
@@ -242,7 +244,7 @@ bool BST::search(int value) {
  * dependencies: recursive helper remove()
  */
 void BST::remove(int value) {
-    remove(root, value);
+    root = remove(root, value);
 }
 
 /**
