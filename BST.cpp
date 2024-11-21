@@ -90,10 +90,10 @@ BSTNode *BST::remove(BSTNode *node, int value) {
     else if (node->data == value) {
         // before removal, recursively remove all children
         if (node->left != nullptr) {
-            remove(node->left, node->data);
+            node->left = remove(node->left, node->left->data);
         }
         if (node->right != nullptr) {
-            remove(node->right, node->data);
+            node->right = remove(node->right, node->right->data);
         }
         // remove a node
         delete node;
@@ -102,12 +102,14 @@ BSTNode *BST::remove(BSTNode *node, int value) {
     }
     // value should be to the left
     else if (node->data > value) {
-        return remove(node->left, value);
+        node->left = remove(node->left, value);
     }
     // value should be to the right
     else if (node->data < value) {
-        return remove(node->right, value);
+        node->right = remove(node->right, value);
     }
+
+    return node;
 
     // this line should never run but just in case
     throw runtime_error("delete() broke");

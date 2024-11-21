@@ -45,11 +45,17 @@ void test_insert() {
 
     BST testTree;
     testTree.insert(5);
+    testTree.displayPostOrder();
     testTree.insert(3);
+    testTree.displayPostOrder();
     testTree.insert(4); // leaf
+    testTree.displayPostOrder();
     testTree.insert(2); // leaf
+    testTree.displayPostOrder();
     testTree.insert(7);
+    testTree.displayPostOrder();
     testTree.insert(6); // leaf
+    testTree.displayPostOrder();
     testTree.insert(8); // leaf
     testTree.displayPostOrder();
     // 2 4 3 6 8 7 5
@@ -96,9 +102,61 @@ void test_insert() {
     // 2 4 3 6 8 7 5
 }
 
-void test_search() {}
+void test_search() {
+    BST testTree;
 
-void test_remove() {}
+    // empty tree test, should be false
+    cout << testTree.search(5) << endl;
+
+    testTree.insert(5);
+    testTree.insert(3);
+    testTree.insert(4); // leaf
+    testTree.insert(2); // leaf
+    testTree.insert(7);
+    testTree.insert(6); // leaf
+    testTree.insert(8); // leaf
+
+    // successful searches for node, root, and leaf. all true
+    cout << testTree.search(7) << endl;
+    cout << testTree.search(5) << endl;
+    cout << testTree.search(2) << endl;
+
+    // false search for node that isn't there
+    cout << testTree.search(10) << endl;
+
+}
+
+void test_remove() {
+    BST testTree;
+
+    // empty tree, target will not be found so nothing happens
+    testTree.remove(5);
+
+    testTree.insert(5);
+    testTree.insert(3);
+    testTree.insert(4); // leaf
+    testTree.insert(2); // leaf
+    testTree.insert(7);
+    testTree.insert(6); // leaf
+    testTree.insert(8); // leaf
+    testTree.displayPostOrder();
+    // 2 4 3 6 8 7 5
+
+    // remove leaf
+    testTree.remove(6);
+    testTree.displayPostOrder();
+    // 2 4 3 8 7 5
+
+    // remove parent of leaf (which still has another child)
+    testTree.remove(7);
+    testTree.displayPostOrder();
+    // 2 4 3 5
+
+    // remove root
+    testTree.remove(5);
+    testTree.displayPostOrder();
+    // nothing
+}
 
 void test_displayInOrder() {}
 
