@@ -122,15 +122,27 @@ BSTNode * BST::findMax(BSTNode *node) const {
 }
 
 void BST::in_order(BSTNode *node) const {
-
+    if (node != nullptr) {
+        in_order(node->left);
+        cout << to_string(node->data) << " ";
+        in_order(node->right);
+    }
 }
 
 void BST::pre_order(BSTNode *node) const {
-
+    if (node != nullptr) {
+        cout << to_string(node->data) << " ";
+        in_order(node->left);
+        in_order(node->right);
+    }
 }
 
 void BST::post_order(BSTNode *node) const {
-
+    if (node != nullptr) {
+        in_order(node->left);
+        in_order(node->right);
+        cout << to_string(node->data) << " ";
+    }
 }
 
 // returns the total number of nodes in the BST
@@ -172,15 +184,18 @@ void BST::remove(int value) {
 }
 
 void BST::displayInOrder() const {
-
+    in_order(root);
+    cout << endl;
 }
 
 void BST::displayPreOrder() const {
-
+    pre_order(root);
+    cout << endl;
 }
 
 void BST::displayPostOrder() const {
-
+    post_order(root);
+    cout << endl;
 }
 
 void BST::displayLevelOrder() const {
