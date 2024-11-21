@@ -2,10 +2,11 @@
  * Assignment: Project3
  * Author(s): Socorra McLaughlin
  * Due Date: 11/20/2024 11:59pm
- * Description: WRITE HERE
- * Comments: WRITE HERE
+ * Description: A main driver in main.cpp which has test functions for all public methods of BST. A BST class with declarations in BST.h and definitions in BST.cpp. A README.txt file detailing the project date, authors project, date, authors, honor pledge, list of files, and dependencies, test plans for each test function, time complexities for each member function, and all major commits of my git log
+ * Comments: Errors should be all accounted for in the form of detecting them and throwing them (always runtime errors)
  * Honor Pledge: I have abided by the Wheaton Honor Code and all work below was performed by Socorra McLaughlin
  */
+
 
 #include <iostream>
 #include <stdexcept>
