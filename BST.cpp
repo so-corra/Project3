@@ -12,15 +12,21 @@ using namespace std;
             RECURSIVE HELPERS
 ===================================================================== */
 
-// adds an item to its proper location in a binary search tree. Note that duplicates should not be stored and an error message should be displayed if duplicate value is found in BST. Any invalid data should throw an exception and be handled properly
+/**
+ * recursive helper function of insert() which searches the tree for the correct location for a new node of value and creates new node there
+ * throws error if duplicate node found
+ * @param node pointer to BSTNode which recursively goes left and right
+ * @param value int to become the data of new node
+ * @return pointer to previous BSTNode so that all nodes point to each other
+ */
 BSTNode *BST::insert(BSTNode *node, int value) {
     // base case, we have arrived at an empty spot to put it
     if (node == nullptr) {
         node = new BSTNode(value);
     }
-    // duplicate case, do nothing and end early
+    // duplicate case, throw error
     else if (node->data == value) {
-        return node; // does not alter pointer to this dupe node
+        throw runtime_error("Cannot insert() node that already exists");
     }
     // go left, current node is greater than new node
     else if (node->data > value) {
@@ -36,7 +42,14 @@ BSTNode *BST::insert(BSTNode *node, int value) {
     return node;
 }
 
-// search for the target value in the BST, returns true if found, false otherwise
+/**
+ * recursive helper function of search() which uses target value to recursively go left and right in the tree until position where target node should be is reached
+ * returns true if target is where it should be, false otherwise
+ * the line that throws an error should never run but it is there
+ * @param node pointer to BSTNode which recursively goes left and right
+ * @param value int which should match target's data
+ * @return bool true if target found, false otherwise
+ */
 bool BST::search(BSTNode *node, int value) {
     // root is nullptr or we've found where the value should be and it isn't there
     if (node == nullptr) {
@@ -59,8 +72,15 @@ bool BST::search(BSTNode *node, int value) {
     throw runtime_error("search() broke");
 }
 
-// remove the node with the target value from the BST if found. The BST should remain connected
-// does nothing when value not found
+
+/**
+ * recursive helper function of remove() which uses target value to recursively go left and right in the tree until position where target node should be is reached
+ * if target is where it should be its children will be removed recursively using remove() before it is deleted, does nothing if target not found
+ * the line that throws an error should never run but it is there
+ * @param node pointer to BSTNode which recursively goes left and right
+ * @param value int which should match target's data
+ * @return a nullptr to previous node which was pointing to a removed node or to signify the recursion can end
+ */
 BSTNode *BST::remove(BSTNode *node, int value) {
     // root is nullptr, target was found and killed, or target could not be found where it should've been
     if (node == nullptr) {
@@ -93,7 +113,11 @@ BSTNode *BST::remove(BSTNode *node, int value) {
     throw runtime_error("delete() broke");
 }
 
-// returns the node with the minimum value in the BST
+/**
+ * recursive helper function of getMin() which recursively goes as far left as possible to return a pointer to that node, the minimum node
+ * @param node pointer to BSTNode which recursively goes left
+ * @return pointer to the leftmost node
+ */
 BSTNode * BST::findMin(BSTNode *node) const {
     // in a sorted BST the min is the leftmost node
 
@@ -107,7 +131,11 @@ BSTNode * BST::findMin(BSTNode *node) const {
     }
 }
 
-// returns the node with the maximum value in the BST
+/**
+ * recursive helper function of getMax() which recursively goes as far right as possible to return a pointer to that node, the maximum node
+ * @param node pointer to BSTNode which recursively goes right
+ * @return pointer to the rightmost node
+ */
 BSTNode * BST::findMax(BSTNode *node) const {
     // in a sorted BST the min is the rightmost node
 
@@ -121,6 +149,10 @@ BSTNode * BST::findMax(BSTNode *node) const {
     }
 }
 
+/**
+ * recursive helper function of displayInOrder() which recursively calls itself left, then prints data, then recursively calls itself right
+ * @param node pointer to current BSTNode during traversal
+ */
 void BST::in_order(BSTNode *node) const {
     if (node != nullptr) {
         in_order(node->left);
@@ -129,6 +161,10 @@ void BST::in_order(BSTNode *node) const {
     }
 }
 
+/**
+ * recursive helper function of displayPreOrder() which prints data, then recursively calls itself left, then recursively calls itself right
+ * @param node pointer to current BSTNode during traversal
+ */
 void BST::pre_order(BSTNode *node) const {
     if (node != nullptr) {
         cout << to_string(node->data) << " ";
@@ -137,6 +173,10 @@ void BST::pre_order(BSTNode *node) const {
     }
 }
 
+/**
+ * recursive helper function of displayPostOrder() which recursively calls itself left, then recursively calls itself right, then prints data
+ * @param node pointer to current BSTNode during traversal
+ */
 void BST::post_order(BSTNode *node) const {
     if (node != nullptr) {
         in_order(node->left);
@@ -145,7 +185,12 @@ void BST::post_order(BSTNode *node) const {
     }
 }
 
-// returns the total number of nodes in the BST
+/**
+ * recursive helper function of count() which will return the size of any subtree stemming from the given node
+ * member function count() isn't implemented in this file so this is the only place where I can note that size() is its dependency
+ * @param node pointer to BSTNode which recursively goes left and right
+ * @return int which recursively increases to represent size of tree
+ */
 int BST::size(BSTNode *node) const {
     // dead ends are zeros
     if (node == nullptr) {
@@ -162,42 +207,74 @@ int BST::size(BSTNode *node) const {
             PUBLIC METHODS
 ===================================================================== */
 
+/**
+ * destructor for Binary Search Tree which calls remove() on the root to recursively delete every node below it
+ * dependencies: recursive helper remove()
+ */
 BST::~BST() {
     // removes all children before root and then root
     remove(root, root->data);
 }
 
-// adds an item to its proper location in a binary search tree. Note that duplicates should not be stored and an error message should be displayed if duplicate value is found in BST. Any invalid data should throw an exception and be handled properly
+/**
+ * calls recursive helper insert() on the root to kick off insertion of new node with data matching the value parameter
+ * @param value int which is to become the data of a new node
+ * dependencies: recursive helper insert() which can throw error
+ */
 void BST::insert(int value) {
     insert(root, value);
 }
 
-// search for the target value in the BST, returns true if found, false otherwise
+/**
+ * calls recursive helper search() on the root to kick off search for a node with data matching target value parameter
+ * @param value int represents the data of the target node
+ * @return bool true if target found, false otherwise
+ * dependencies: recursive helper search()
+ */
 bool BST::search(int value) {
     return search(root, value);
 }
 
-// remove the node with the target value from the BST if found. The BST should remain connected
-// does nothing when value not found
+/**
+ * calls recursive helper remove() on the root to kick off search for a node with data matching target value parameter
+ * if found, target node and all of its children will be recursively deleted such that no node points to them and memory is freed
+ * @param value int represents the data of the target node
+ * dependencies: recursive helper remove()
+ */
 void BST::remove(int value) {
     remove(root, value);
 }
 
+/**
+ * calls recursive helper in_order() on the root to kick off in-order printing of the tree
+ * dependencies: recursive helper in_order()
+ */
 void BST::displayInOrder() const {
     in_order(root);
     cout << endl;
 }
 
+/**
+ * calls recursive helper pre_order() on the root to kick off pre-order printing of the tree
+ * dependencies: recursive helper pre_order()
+ */
 void BST::displayPreOrder() const {
     pre_order(root);
     cout << endl;
 }
 
+/**
+ * calls recursive helper post_order() on the root to kick off post-order printing of the tree
+ * dependencies: recursive helper post_order()
+ */
 void BST::displayPostOrder() const {
     post_order(root);
     cout << endl;
 }
 
+/**
+ * iteratively prints the tree in level-order using a queue
+ */
 void BST::displayLevelOrder() const {
     // check for empty tree, print nothing and end
     if (root == nullptr) {
@@ -236,7 +313,11 @@ void BST::displayLevelOrder() const {
     }
 }
 
-// this method should have no parameters and return an integer representing the height of the tree
+/**
+ * iteratively increments a counter as levels of the tree are traversed in a manner matching the level-order queue-based implementation
+ * throws an error if called on an empty tree
+ * @return int height of the tree which will be 0 for a tree with only the root and increase by 1 for each level beyond that
+ */
 int BST::height() const {
     // check for empty tree
     if (root == nullptr) {
@@ -275,7 +356,12 @@ int BST::height() const {
     return heightToReturn;
 }
 
-// returns the node with the minimum value in the BST
+/**
+ * calls recursive helper findMin() to kick off retrieval of a pointer to the min (leftmost) node from which its data is grabbed
+ * throws an error if called on an empty tree
+ * @return int which is the data of the min node
+ * dependencies: recursive helper findMin()
+ */
 int BST::getMin() const {
     // cannot be run on empty tree, throw error
     if (root == nullptr) {
@@ -286,7 +372,12 @@ int BST::getMin() const {
     return findMin(root)->data;
 }
 
-// returns the node with the maximum value in the BST
+/**
+ * calls recursive helper findMax() to kick off retrieval of a pointer to the max (rightmost) node from which its data is grabbed
+ * throws an error if called on an empty tree
+ * @return int which is the data of the max node
+ * dependencies: recursive helper findMax()
+ */
 int BST::getMax() const {
     // cannot be run on empty tree, throw error
     if (root == nullptr) {
@@ -298,6 +389,18 @@ int BST::getMax() const {
 }
 
 // returns true if the BST is complete, false otherwise
+
+/**
+ * iteratively increments a counter as levels of the tree are traversed in a manner matching the level-order queue-based implementation
+ * throws an error if called on an empty tree
+ * @return int height of the tree which will be 0 for a tree with only the root and increase by 1 for each level beyond that
+ */
+
+/**
+ * iteratively tracks the absence of left nodes on current level and right nodes on the previous level as levels of the tree are traversed in a manner matching the level-order queue-based implementation
+ * these tracked criteria are used to determine if the tree is complete or incomplete
+ * @return bool true if tree is complete or empty, false otherwise
+ */
 bool BST::isComplete() const {
     // check for empty tree
     if (root == nullptr) {
