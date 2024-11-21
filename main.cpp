@@ -158,23 +158,270 @@ void test_remove() {
     // nothing
 }
 
-void test_displayInOrder() {}
+void test_displayInOrder() {
+    BST testTree;
 
-void test_displayPrOrder() {}
+    testTree.displayInOrder();
+    // nothing it's empty
 
-void test_displayPostOrder() {}
+    testTree.insert(5);
+    testTree.insert(3);
+    testTree.insert(4); // leaf
+    testTree.insert(2); // leaf
+    testTree.insert(7);
+    testTree.insert(6); // leaf
+    testTree.insert(8); // leaf
+    testTree.displayInOrder();
+    // 2 3 4 5 6 7 8
 
-void test_displayLevelOrder() {}
+    // after changes made
+    testTree.remove(7);
+    testTree.displayInOrder();
+    // 2 3 4 5
+}
 
-void test_count() {}
+void test_displayPreOrder() {
+    BST testTree;
 
-void test_height() {}
+    testTree.displayPreOrder();
+    // nothing it's empty
 
-void test_getMin() {}
+    testTree.insert(5);
+    testTree.insert(3);
+    testTree.insert(4); // leaf
+    testTree.insert(2); // leaf
+    testTree.insert(7);
+    testTree.insert(6); // leaf
+    testTree.insert(8); // leaf
+    testTree.displayPreOrder();
+    // 5 3 2 4 7 6 8
 
-void test_getMax() {}
+    // after changes made
+    testTree.remove(7);
+    testTree.displayPreOrder();
+    // 5 3 2 4
+}
 
-void test_isComplete() {}
+void test_displayPostOrder() {
+    BST testTree;
+
+    testTree.displayPostOrder();
+    // nothing it's empty
+
+    testTree.insert(5);
+    testTree.insert(3);
+    testTree.insert(4); // leaf
+    testTree.insert(2); // leaf
+    testTree.insert(7);
+    testTree.insert(6); // leaf
+    testTree.insert(8); // leaf
+    testTree.displayPostOrder();
+    // 2 4 3 6 8 7 5
+
+    // after changes made
+    testTree.remove(7);
+    testTree.displayPostOrder();
+    // 2 4 3 5
+}
+
+void test_displayLevelOrder() {
+    BST testTree;
+
+    testTree.displayLevelOrder();
+    // nothing it's empty
+
+    testTree.insert(5);
+    testTree.insert(3);
+    testTree.insert(4); // leaf
+    testTree.insert(2); // leaf
+    testTree.insert(7);
+    testTree.insert(6); // leaf
+    testTree.insert(8); // leaf
+    testTree.displayLevelOrder();
+    // 5
+    // 3 7
+    // 2 4 6 8
+
+    // after changes made
+    testTree.remove(7);
+    testTree.displayLevelOrder();
+    // 5
+    // 3
+    // 2 4
+}
+
+void test_count() {
+    BST testTree;
+
+    cout << testTree.count() << endl;
+    // 0
+
+    testTree.insert(5);
+    testTree.insert(3);
+    testTree.insert(4); // leaf
+    testTree.insert(2); // leaf
+    testTree.insert(7);
+    testTree.insert(6); // leaf
+    testTree.insert(8); // leaf
+    cout << testTree.count() << endl;
+    // 7
+
+    // after changes made
+    testTree.remove(7);
+    cout << testTree.count() << endl;
+    // 4
+}
+
+void test_height() {
+    BST testTree;
+
+    // error from calling on empty tree
+    try {
+        cout << testTree.height() << endl;
+        cout << "uh oh, empty height() didn't throw error" << endl;
+    }
+    catch (runtime_error) {
+        cout << "yay, empty height() threw error" << endl;
+    }
+
+    // one level
+    testTree.insert(5);
+    cout << testTree.height() << endl;
+    // 0
+
+    // two levels
+    testTree.insert(3);
+    cout << testTree.height() << endl;
+    // 1
+
+    // three levels
+    testTree.insert(4); // leaf
+    // 2
+
+    // same number of levels but with more nodes and branches
+    testTree.insert(2); // leaf
+    testTree.insert(7);
+    testTree.insert(6); // leaf
+    testTree.insert(8); // leaf
+    cout << testTree.height() << endl;
+    // 2
+
+    // two levels removed
+    testTree.remove(7);
+    testTree.remove(3);
+    cout << testTree.height() << endl;
+    // 0
+}
+
+void test_getMin() {
+    BST testTree;
+
+    // error from calling on empty tree
+    try {
+        cout << testTree.getMin() << endl;
+        cout << "uh oh, empty getMin() didn't throw error" << endl;
+    }
+    catch (runtime_error) {
+        cout << "yay, empty getMin() threw error" << endl;
+    }
+
+    // one node, it is the min
+    testTree.insert(5);
+    cout << testTree.getMin() << endl;
+    // 5
+
+    // new node which is the new min
+    testTree.insert(3);
+    cout << testTree.getMin() << endl;
+    // 3
+
+    // new node which is not a new min
+    testTree.insert(4); // leaf
+    cout << testTree.getMin() << endl;
+    // 3
+
+    // tons of new nodes with one being a new min
+    testTree.insert(2); // leaf
+    testTree.insert(7);
+    testTree.insert(6); // leaf
+    testTree.insert(8); // leaf
+    cout << testTree.getMin() << endl;
+    // 2
+
+    // previous min removed
+    testTree.remove(2);
+    cout << testTree.getMin() << endl;
+    // 3
+}
+
+void test_getMax() {
+    BST testTree;
+
+    // error from calling on empty tree
+    try {
+        cout << testTree.getMax() << endl;
+        cout << "uh oh, empty getMax() didn't throw error" << endl;
+    }
+    catch (runtime_error) {
+        cout << "yay, empty getMax() threw error" << endl;
+    }
+
+    // one node, it is the max
+    testTree.insert(5);
+    cout << testTree.getMax() << endl;
+    // 5
+
+    // new node which is not the new max
+    testTree.insert(3);
+    cout << testTree.getMax() << endl;
+    // 5
+
+    // new node which is the new max
+    testTree.insert(7);
+    cout << testTree.getMax() << endl;
+    // 7
+
+    // tons of new nodes with one being a new max
+    testTree.insert(2); // leaf
+    testTree.insert(4); // leaf
+    testTree.insert(6); // leaf
+    testTree.insert(8); // leaf
+    cout << testTree.getMax() << endl;
+    // 8
+
+    // previous max removed
+    testTree.remove(8);
+    cout << testTree.getMax() << endl;
+    // 7
+}
+
+void test_isComplete() {
+    BST testTree;
+
+    // true bc it is on an empty tree
+    cout << testTree.isComplete() << endl;
+    // 1
+
+    // creating an incomplete tree with 3 levels
+    testTree.insert(5);
+    testTree.insert(3);
+    testTree.insert(4); // leaf
+    testTree.insert(7);
+    testTree.insert(6); // leaf
+    testTree.insert(8); // leaf
+    cout << testTree.isComplete() << endl;
+    // 0
+
+    // completing the tree
+    testTree.insert(2); // leaf
+    cout << testTree.isComplete() << endl;
+    // 1
+
+    // making it no longer complete
+    testTree.remove(4);
+    cout << testTree.isComplete() << endl;
+    // 0
+}
 
 
 int main() {
@@ -191,7 +438,7 @@ int main() {
 
     test_displayInOrder();
 
-    test_displayPrOrder();
+    test_displayPreOrder();
 
     test_displayPostOrder();
 
